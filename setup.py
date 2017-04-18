@@ -12,7 +12,7 @@ setup(name='NestedSampling_DMD',
           'numpy',
           'nestle',
           'math',
-          'corner',
+          'astropy corner',
           'matplotlib',
           'scipy'
             
