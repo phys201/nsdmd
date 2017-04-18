@@ -18,6 +18,4 @@ setup(name='NestedSampling_DMD',
             
       ],
       zip_safe=False,
-      test_suite='nose.collector',
-      tests_require=['nose'],
 )
