@@ -1,2 +1,2 @@
-# NestedSampling_DMD
+# nestedsampling-dmd
 Compare DarkMatterDensity profiles.
