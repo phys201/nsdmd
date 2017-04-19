@@ -7,7 +7,7 @@ setup(name='NestedSampling_DMD',
       author='Daniya and Jun',
       author_email='yinjun02@gmail.com and daniya_seitova@g.harvard.edu ',
       license='GNU General Public License v3.0',
-      packages=['dmd'],
+      packages=['nsdmd'],
       install_requires=[
           'numpy',
           'nestle',
@@ -15,7 +15,9 @@ setup(name='NestedSampling_DMD',
           'corner',
           'matplotlib',
           'scipy',
-          'os'
+          'os',
+          'nose',
+          'pandas'
             
       ],
       zip_safe=False,
