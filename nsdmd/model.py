@@ -72,5 +72,51 @@ def prior_transform_NFW(theta):
     # return  np.array([10, 300]) * theta
     return  np.array([10*theta[0],500*theta[1]])
 
+def show_results(loglike_NFW, prior_transform_NFW, n): 
+    # n is the dim of theta; for NFW model, n =2 
+    result = nestle.sample(loglike_NFW, prior_transform_NFW, 2)
+
+    print ('log evidence')
+    print (result.logz)
+
+    print ('numerical (sampling) error on logz')
+    print (result.logzerr)   
+       
+    print ('array of sample parameters')
+    print (result.samples)  
+       
+    print ('array of weights associated with each sample')
+    print (result.weights)
+    
+    
+    p, cov = nestle.mean_and_cov(result.samples, result.weights)
+
+    print("core radius a = {0:5.2f} +/- {1:5.2f} kpc".format(p[0], np.sqrt(cov[0, 0])))
+    print("normalization factor = {0:5.2f} +/- {1:5.2f}".format(p[1], np.sqrt(cov[1, 1])))
+    print("Halo density normalization constant = {0:5.2e} +/- {1:5.2e} Msun/kpc^3".format(2.312E5*p[1], 2.312E5*np.sqrt(cov[1,
+                                                                                                                            1])))
+
+    # Note: in order to convert the model to units of Msun/kpc^3 we multiply its value by 2.312E5.
+    # See comments in the model definition for details.
+    print("Halo density in our solor system = {0:5.2e} Msun/kpc^3.".format(2.312E5*model_NFW(p, 8)))
+
+    # Note: 1 Msun/kpc^3 = 3.817E-2 (GeV/c^2)/m^3 = 3.817E-5 (GeV/c^2)/(dm^3)
+    # 1 dm^3 = 1 liter.
+    # 3 WIMPS/liter would be 300 GeV/c^2/liter
+    print("Halo density in our solor system = {0:5.2e} GeV/c^2/liter.".format(3.817E-5*2.312E5*model_NFW(p, 8)))
+
+    plt.figure()
+    plt.errorbar(data_x,data_y,data_yerr,data_xerr,fmt='*')
+    plt.xlabel("r (kpc)")
+    plt.ylabel('V (km/s)')
+    plt.title("The measured rotational speed of the interstellar medium as a fucntion of the galactocentric radius")
+    plt.plot([5.,200.],model_NFW(p, np.array([5.,200.])))
+    plt.show()
+
+    fig = corner.corner(result.samples, weights=result.weights, labels=['a', 'rho0'],
+                        range=[0.99999, 0.99999], bins=30)
+    plt.show()
+
+    return 0 
 
 
