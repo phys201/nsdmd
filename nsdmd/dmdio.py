@@ -18,12 +18,11 @@ def get_example_data_file_path(filename, data_dir='example_data'):
     return os.path.join(start_dir, data_dir, filename)
 
 def load_data(data_file):
-    dataExp =pd.read_csv(data_file, sep=', ', header=None,names=['r','v','dv'])
-    data_file = pd.DataFrame(dataExp)
+    df =pd.read_csv(data_file)
     
-    data_x = data_file['r']
+    data_x = df['r'].values
     data_xerr = 0
-    data_y = data_file['v']
-    data_yerr = data_file['dv']
+    data_y = df['v'].values
+    data_yerr = df['dv'].values
     
     return  data_x, data_xerr ,  data_y ,data_yerr 
