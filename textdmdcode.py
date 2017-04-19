@@ -2,10 +2,8 @@ import unittest
 import os
 import numpy as np
 
-
 from nsdmd import model
 from nsdmd import dmdio
-
 
 
 
@@ -50,8 +48,7 @@ class TestFunctions(unittest.TestCase):
         self.assertTrue(np.argmax(vrot)>-1000)
         
         
-        
-
+       
 
 if __name__ == '__main__':
     unittest.main()            
