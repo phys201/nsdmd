@@ -7,6 +7,8 @@ License:GNU General Public License v3
 
 
 
+Package Manual:
+
 model.ipynb : shows the contents where we import our package, load our test data, do some inference using our model, and show some plots.
 
 testdmdcode.py : test the code 
