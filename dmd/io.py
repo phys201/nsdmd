@@ -1,8 +1,5 @@
 import pandas as  pd
-
-
 import os
-import pandas as pd
 
 
 
@@ -21,4 +18,4 @@ def get_example_data_file_path(filename, data_dir='example_data'):
     return os.path.join(start_dir, data_dir, filename)
 
 def load_data(data_file):
-    return pd.read_csv(data_file, sep=', ')
+    return pd.read_csv(data_file, sep=', ', header=None,names=['r','v','dv'])
