@@ -47,10 +47,10 @@ class TestFunctions(unittest.TestCase):
             theta = theta0_range[i], 10
             vrot[i]=model.model_NFW(theta,11)
                     
-                    
         self.assertTrue(np.argmax(vrot)>-1000)
         
-
+        
+        
 
 
 if __name__ == '__main__':
