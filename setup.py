@@ -14,7 +14,8 @@ setup(name='NestedSampling_DMD',
           'math',
           'astropy corner',
           'matplotlib',
-          'scipy'
+          'scipy',
+          'os'
             
       ],
       zip_safe=False,
