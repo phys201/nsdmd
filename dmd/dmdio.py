@@ -18,4 +18,12 @@ def get_example_data_file_path(filename, data_dir='example_data'):
     return os.path.join(start_dir, data_dir, filename)
 
 def load_data(data_file):
-    return pd.read_csv(data_file, sep=', ', header=None,names=['r','v','dv'])
+    pd.read_csv(data_file, sep=', ', header=None,names=['r','v','dv'])
+    data_file = pd.DataFrame(dateExp)
+    
+    data_x = data_file['r']
+    data_xerr = 0
+    data_y = data_file['v']
+    data_yerr = data_file['dv']
+    
+    return  data_x, data_xerr ,  data_y ,data_yerr 
