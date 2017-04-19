@@ -1,7 +1,0 @@
-numpy
-nestle
-corner
-matplotlib
-scipy
-nose
-pandas
