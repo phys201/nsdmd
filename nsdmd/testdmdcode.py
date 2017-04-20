@@ -3,20 +3,20 @@ import os
 import numpy as np
 
 from nsdmd import model
-from nsdmd import dmdio
+from nsdmd import io
 
 
 
 class TestFunctions(unittest.TestCase):
     def test_io(self):
         filename = 'example_data.txt'
-        testdata_x,testdata_xerr,testdata_y,testdata_yerr = dmdio.load_data(filename)
+        testdata_x,testdata_xerr,testdata_y,testdata_yerr = io.load_data(filename)
         self.assertTrue(issubclass(type(testdata_x), np.ndarray))
         
         
         
     def test_prior_transform_NFW(self):
-        testdata = dmdio.load_data('example_data.txt')
+        testdata = io.load_data('example_data.txt')
         theta0_range = np.linspace(0,0.1,3)
         theta1_range = np.linspace(0,0.1,3)
         priorRange=np.ones((len(theta0_range),len(theta1_range)))

@@ -1,0 +1,11 @@
+setup.py
+NestedSampling_DMD.egg-info/PKG-INFO
+NestedSampling_DMD.egg-info/SOURCES.txt
+NestedSampling_DMD.egg-info/dependency_links.txt
+NestedSampling_DMD.egg-info/not-zip-safe
+NestedSampling_DMD.egg-info/requires.txt
+NestedSampling_DMD.egg-info/top_level.txt
+nsdmd/__init__.py
+nsdmd/io.py
+nsdmd/model.py
+nsdmd/testdmdcode.py
