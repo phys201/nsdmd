@@ -1,24 +1,23 @@
 from setuptools import setup
 
-setup(name='NestedSampling_DMD',
-      version='1',
-      description='Tool for calculating rotational curve by DarkMatterDesensityFiles',
-      url='https://github.com/p201-sp2016/NestedSampling_DMD',
-      author='Daniya and Jun',
-      author_email='yinjun02@gmail.com and daniya_seitova@g.harvard.edu ',
-      license='GNU General Public License v3.0',
-      packages=['nsdmd'],
+def readme():
+    with open('README.md') as f:
+        return f.read()
+      
+setup(name='gamma_image',
+      version='0.1',
+      description='This package contains files to model position and create images of detected gamma rays in a Strontium Iodide crystal sheet.',
+      long_description=readme(),
+      url='https://github.com/p201-sp2016/gamma_image/',
+      author='LaNell Williams and Cody Baxley',
+      author_email='lanellwilliams@g.harvard.edu, cbaxley@fas.harvard.edu',
+      license=' GNU GPL v3',
+      packages=['gamma_image'],
       install_requires=[
           'numpy',
-          'nestle',
-#          'math',
-          'corner',
-          'matplotlib',
-          'scipy',
-         # 'os',
-          'nose',
-          'pandas'
-            
+          'pandas',
       ],
-      zip_safe=False,
-)
+      test_suite='nose.collector',
+      tests_require=['nose'],
+      include_package_data=True,
+      zip_safe=False)
