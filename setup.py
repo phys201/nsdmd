@@ -11,14 +11,13 @@ setup(name='NestedSampling_DMD',
       install_requires=[
           'numpy',
           'nestle',
-#          'math',
           'corner',
           'matplotlib',
           'scipy',
-         # 'os',
-          'nose',
-          'pandas'
-            
+          'pandas' 
       ],
+      test_suite='nose.collector',
+      tests_require=['nose'],
+      include_package_data=True,
       zip_safe=False,
 )
