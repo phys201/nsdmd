@@ -1,6 +1,6 @@
 from setuptools import setup
 
-setup(name='NestedSampling_DMD',
+setup(name='nsdmd',
       version='1',
       description='Tool for calculating rotational curve by DarkMatterDesensityFiles',
       url='https://github.com/p201-sp2016/NestedSampling_DMD',
@@ -11,14 +11,13 @@ setup(name='NestedSampling_DMD',
       install_requires=[
           'numpy',
           'nestle',
-#          'math',
           'corner',
           'matplotlib',
           'scipy',
-         # 'os',
-          'nose',
-          'pandas'
-            
+          'pandas' 
       ],
+      test_suite='nose.collector',
+      tests_require=['nose'],
+      include_package_data=True,
       zip_safe=False,
 )
