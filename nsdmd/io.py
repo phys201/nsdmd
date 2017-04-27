@@ -30,6 +30,10 @@ def load_data(data_file):
     return  data_x, data_xerr ,  data_y ,data_yerr 
 
 def load_data2(data_file):
+    '''
+    Loads the data file from the data_file arg, which requires full path and filename
+    Use io.get_example_data_file_path to construct data_file arg easily
+    '''
     df =pd.read_csv(data_file)
     
     data_x = df['r'].values

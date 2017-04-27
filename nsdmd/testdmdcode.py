@@ -9,14 +9,12 @@ class TestFunctions(unittest.TestCase):
         Tests that the nsdmd.io functions are working and that the loaded data is a numpy array
         '''
         filename = 'dataref1.txt'
-        totalpath = nsdmd.get_example_data_file_path(filename, data_dir='data')
-        testdata_x,testdata_xerr,testdata_y,testdata_yerr = nsdmd.load_data(totalpath)
+        testdata_x,testdata_xerr,testdata_y,testdata_yerr = nsdmd.load_data(filename)
         self.assertTrue(issubclass(type(testdata_x), np.ndarray))
               
     def test_prior_transform_NFW(self):
         filename = 'dataref1.txt'
-        totalpath = nsdmd.get_example_data_file_path(filename, data_dir='data')
-        testdata = nsdmd.load_data(totalpath)
+        testdata = nsdmd.load_data(filename)
         theta0_range = np.linspace(0,0.1,3)
         theta1_range = np.linspace(0,0.1,3)
         priorRange=np.ones((len(theta0_range),len(theta1_range)))
