@@ -120,3 +120,97 @@ def show_results(loglike_NFW, prior_transform_NFW, n):
     return 0 
 
 
+def model_Isothermal(theta, x):
+    a = theta[0]
+    mass = 4.*np.pi*(a**3)*(np.log((a+x)/a)-x/(a+x))      
+    vrot = theta[1]*np.sqrt(mass/x)   
+    return vrot
+
+def loglike_IsothermalProfile_ref1 (theta):
+    #theta[1] is the constant proportional factor 
+    density_IsothermalProfile =   1/( 1+data_x_ref1 /theta[0] )**2 
+    y=theta[1] * 1
+    chisq = np.sum(((data_y_ref1 - y) / data_yerr_ref1)**2)
+    return -chisq / 2.
+
+def loglike_IsothermalProfile_ref2 (theta):
+    #theta[1] is the constant proportional factor 
+    density_IsothermalProfile =   1/( 1+data_x_ref2 /theta[0] )**2 
+    y=theta[1] * 1
+    chisq = np.sum(((data_y_ref2 - y) / data_yerr_ref2)**2)
+    return -chisq / 2.
+
+def prior_transform_Isothermal(theta):
+    
+    # theta[0] in the range of [0,10] and theta[1] in the range of [0,300]
+    return  np.array([20, 300]) * theta
+    #return  np.array([10*theta[0],500*theta[1]])
+    
+
+
+
+
+
+
+
+
+
+
+
+
+def model_Einasto(theta, x):
+    a = theta[0]
+    mass = 4.*np.pi*(a**3)*(np.log((a+x)/a)-x/(a+x))      
+    vrot = theta[1]*np.sqrt(mass/x)   
+    return vrot
+
+def loglike_EinastoProfile_ref1(theta):
+    #theta[2] is the constant proportional factor 
+    density_EinastoProfile = np.exp( -  theta[0]*  data_x_ref1**theta[1] ) 
+    y=theta[2] *1
+    chisq = np.sum(((data_y_ref1 - y) / data_yerr_ref1)**2)
+    return -chisq / 2.
+
+def loglike_EinastoProfile_ref2(theta):
+    #theta[2] is the constant proportional factor 
+    density_EinastoProfile = np.exp( -  theta[0]*  data_x_ref2**theta[1] ) 
+    y=theta[2] *1
+    chisq = np.sum(((data_y_ref2 - y) / data_yerr_ref2)**2)
+    return -chisq / 2.
+
+def prior_transform_Einasto(theta):
+    
+    # theta[0] in the range of [0,10] and theta[1] in the range of [0,300]
+    return  np.array([20, 300]) * theta
+    #return  np.array([10*theta[0],500*theta[1]])
+    
+    
+    
+    
+    
+def model_GeneralizedDM(theta, x):
+    a = theta[0]
+    mass = 4.*np.pi*(a**3)*(np.log((a+x)/a)-x/(a+x))      
+    vrot = theta[1]*np.sqrt(mass/x)   
+    return vrot
+
+def loglike_GeneralizedDMProfile_ref1(theta):
+    #theta[4] is the constant proportional factor 
+    density_GeneralizedDMProfile = 1/(    (data_x_ref1 /theta[0])**theta[1] *( 1+ (data_x_ref1 /theta[0])**theta[2] )**2 ) **((theta[3] - theta[1])/theta[2] )
+    y=theta[4] * 1
+    chisq = np.sum(((data_y_ref1 - y) / data_yerr_ref1)**2)
+    return -chisq / 2.
+
+def loglike_GeneralizedDMProfile_ref2(theta):
+    #theta[4] is the constant proportional factor 
+    density_GeneralizedDMProfile = 1/(    (data_x_ref2 /theta[0])**theta[1] *( 1+ (data_x_ref2 /theta[0])**theta[2] )**2 ) **((theta[3] - theta[1])/theta[2] )
+    y=theta[4] * 1
+    chisq = np.sum(((data_y_ref2 - y) / data_yerr_ref2)**2)
+    return -chisq / 2.
+
+def prior_transform_GeneralizedDM(theta):
+    
+    # theta[0] in the range of [0,10] and theta[1] in the range of [0,300]
+    return  np.array([20, 300]) * theta
+    #return  np.array([10*theta[0],500*theta[1]])
+
