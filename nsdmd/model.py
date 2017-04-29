@@ -35,9 +35,8 @@ def model_NFW(theta, x):
     # To convert from kg/m^3 to kg/kpc^3, we multiply by (3.086E19)^3
     # The normalization constant rho0 is thus (theta1[1]^2)/6.67E-11 * ((3.24E-17)^2 * (3.086E19)^3 kg/(kpc)^3 = 
     # (theta1[1]^2)*4.625E35 kg/(kpc)^3 = 2.312E5 Msun/(kpc)^3.
-    vrot = theta[1]*np.sqrt(mass/x) 
-    
-    return vrot
+    return theta[1]*np.sqrt(mass/x) 
+   
     
     
     
@@ -54,10 +53,10 @@ def loglike_NFW(theta):
     vrot = theta[1]*np.sqrt(mass/data_x) 
     
     # The y variable is the rotational velocity.
-    y = vrot
+   
 
     # Calculate chisq
-    chisq= np.sum(((data_y - y) / data_yerr)**2)
+    chisq= np.sum(((data_y - vrot) / data_yerr)**2)
     return -chisq / 2.
 
 
@@ -123,8 +122,8 @@ def show_results(loglike_NFW, prior_transform_NFW, n):
 def model_Isothermal(theta, x):
     a = theta[0]
     mass = 4.*np.pi*(a**3)*(np.log((a+x)/a)-x/(a+x))      
-    vrot = theta[1]*np.sqrt(mass/x)   
-    return vrot
+    return theta[1]*np.sqrt(mass/x)   
+  
 
 def loglike_IsothermalProfile_ref1 (theta):
     #theta[1] is the constant proportional factor 
