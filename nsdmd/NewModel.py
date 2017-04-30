@@ -43,7 +43,6 @@ def model_NFW(theta, x):
     return vrot
 
 
-
 # Define a likelihood function
 def loglike_NFW(theta,data):
     
@@ -72,12 +71,7 @@ def loglike_NFW(theta,data):
     return -chisq / 2.
 
 
-
-
-
-
-
-def prior_transform_NFW( theta,a, b):
+def prior_transform_NFW( theta,priorRange):
     
     
     """
@@ -86,33 +80,100 @@ def prior_transform_NFW( theta,a, b):
     theta: para 
     
     """
-    
+    a,b = priorRange[0],priorRange[1]
     
     return  np.array([a*theta[0],b*theta[1]])
 
 
 
-def sample (loglike_model, prior_transform_model, datafile,n, a, b):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def sample (loglike_model, prior_transform_model, datafile,priorRange):
     
     """
-    loglike_model :func returns loglikelihood interms of parameters 
-    prior_transform_model: func returns prior interms of parameters 
-    n: number of parameters, =2 here 
-    a,b : prior range 
+    this function calls the loglikihood calculation function and the prior calculation function AND calculates the nestle results 
+    
+    
+    loglike_model :function returns loglikelihood interms of parameters 
+    
+    prior_transform_model: function  returns prior interms of parameters 
+    
+    
+    prior range : an arrage which specifies the limits of prior for different parameters eg:  prior range = [rangeForTheta[0],rangeForTheta[1],...]
     
     """
     
     
     data_x,data_xerr,data_y,data_yerr = io.load_data(datafile)
+    
+    #n: number of parameters, len(priorRange)
+    n=len(priorRange) 
+
+
+
 
 
     def new_loglike_model(theta):
         return loglike_model(theta, (data_x,data_xerr,data_y,data_yerr))
         
     def new_prior_transform_model(theta):
-        return prior_transform_NFW(theta,a,b)
+        return prior_transform_model(theta,priorRange)
     
-    result = nestle.sample(new_loglike_model, new_prior_transform_model, 2)
+    result = nestle.sample(new_loglike_model, new_prior_transform_model, n)
+    
+    
+    print ('log evidence')
+    print (result.logz)
+
+    print ('numerical (sampling) error on logz')
+    print (result.logzerr)   
+       
+    print ('array of sample parameters')
+    print (result.samples)  
+       
+    print ('array of weights associated with each sample')
+    print (result.weights)
+    
+    
+    
+    
     
     
     return result 
