@@ -60,3 +60,5 @@
  +
  +#Ipython Notebook
  +.ipynb_checkpoints
+
+\.ipynb_checkpoints/
