@@ -13,8 +13,6 @@ class TestFunctions(unittest.TestCase):
         testdata_x,testdata_xerr,testdata_y,testdata_yerr = io.load_data(filename)
         self.assertTrue(issubclass(type(testdata_x), np.ndarray))
         
-        
-        
     def test_prior_transform_NFW(self):
         testdata = io.load_data('dataref1.txt')
         theta0_range = np.linspace(0,0.1,3)
@@ -27,14 +25,11 @@ class TestFunctions(unittest.TestCase):
                 
                 theta = theta0_range[i], theta1_range[j]
 
-                priorRange[i,j]= np.argmax(model.prior_transform_NFW(theta))
+                priorRange[i,j]= np.argmax(model.prior_transform_NFW(theta,[10,500]))
             
-        self.assertTrue(np.argmax(priorRange)<10000 and np.argmax(priorRange)>-1)
-        
-
+        self.assertTrue(np.argmax(priorRange)<10000 and np.argmax(priorRange)>-1)        
         
         
-     
     def test_model_NFW(self):
         
         theta0_range = np.linspace(6,1,10)
@@ -46,10 +41,10 @@ class TestFunctions(unittest.TestCase):
             vrot[i]=model.model_NFW(theta,11)
                     
         self.assertTrue(np.argmax(vrot)>-1000)
+             
         
         
-       
-
+   
 if __name__ == '__main__':
     unittest.main()            
             
