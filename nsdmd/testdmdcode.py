@@ -68,6 +68,20 @@ class TestFunctions(unittest.TestCase):
             vrot[i]=model.model_Einasto(theta,11)
                     
         self.assertTrue(np.argmax(vrot)>-1000)
+        
+        
+        
+        
+        
+    def test_sample(self):
+        
+        result = model.sample (model.loglike_NFW, model.prior_transform_NFW, 'example_data.txt',[10,500])
+        
+        self.assertTrue(isinstance(result.logz, float))
+
+
+ 
+        
                 
 if __name__ == '__main__':
     unittest.main()            
