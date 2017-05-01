@@ -12,7 +12,9 @@ def model_NFW(theta, x):
     
     
     """
-    define the model 
+    this function defines the dark matter density profile 
+    thata: free parameters in the dark matter density profile
+    x: galactocentric radius 
     
     """
     
@@ -48,8 +50,11 @@ def loglike_NFW(theta,data):
     
     
     """
-    data: data_x,data_xerr,data_y,data_yerr
-    
+    this function calculates the loglikelihood 
+    data: data_x(the galactocentric radius[kpc] ),data_xerr(the error of galactocentric radius[kpc]) ,data_y(the rotational               velocits [km/s]),data_yerr (the error of the rotational velocits [km/s])
+    thata: free parameters in the dark matter density profile
+
+
     
     """
     data_x, data_xerr, data_y, data_yerr = data
@@ -73,11 +78,17 @@ def loglike_NFW(theta,data):
 
 def prior_transform_NFW( theta,priorRange):
     
+
+
     
     """
-    a:  theta[0] in the range of [0,a]  (10 the value used )     
-    b:  theta[1] in the range of [0,b]  (500 the value used )
-    theta: para 
+     It is a transformation from a space where variables are independently and uniformly distributed between 0 and 1 to the          parameter space of interest. 
+    thata: free parameters in the dark matter density profile
+    priorRange: it's in [a,b] form. 
+                Note that here we choose to use uniform prior. We use prior range to limits the limit the range of the unifrom                 prior.  
+ 
+                a:  the prior for theta[0]is an uniform distribution on [0,a]  (10 the value used )     
+                b:  the prior for theta[1]is an uniform distribution on [0,b]  (500 the value used )
     
     """
     a,b = priorRange[0],priorRange[1]
@@ -337,15 +348,14 @@ def prior_transform_Einasto(theta,priorRange):
 def sample (loglike_model, prior_transform_model, datafile,priorRange):
     
     """
-    this function calls the loglikihood calculation function and the prior calculation function AND calculates the nestle results 
+    this function calls the loglikihood calculation function and the prior calculation function 
+    this function calculates the nestle sampling results 
     
     
-    loglike_model :function returns loglikelihood interms of parameters 
-    
-    prior_transform_model: function  returns prior interms of parameters 
-    
-    
-    prior range : an arrage which specifies the limits of prior for different parameters eg:  prior range = [rangeForTheta[0],rangeForTheta[1],...]
+    loglike_model : function calculates likelihood 
+    prior_transform_model: function  calculates priors   
+    datafile: data file which has four colums: r(the galactocentric radius[kpc] ),dr(the error of galactocentric radius[kpc])                 ,v(the rotational velocits [km/s]), dv(the error of the rotational velocits [km/s])
+    prior range : an arrage which specifies the limits of unifrom prior for different parameters eg:  prior range = [rangeForTheta[0],rangeForTheta[1],...]
     
     """
     
