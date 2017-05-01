@@ -47,3 +47,6 @@ use it to upgrade the package
 
 -7- UPGRADE THE CODE 
 
+-------------------------do it now --------
+email vinny about the 2 column format thing 
+email Ron for blabla 
