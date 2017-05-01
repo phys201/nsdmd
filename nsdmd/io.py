@@ -21,18 +21,6 @@ def load_data(data_file):
     df =pd.read_csv(data_file)
     
     data_x = df['r'].values
-    data_xerr = 0
-    data_y = df['v'].values
-    data_yerr = df['dv'].values
-    
-    return  data_x, data_xerr ,  data_y ,data_yerr 
-
-
-
-def load_data2(data_file):
-    df =pd.read_csv(data_file)
-    
-    data_x = df['r'].values
     data_xerr = df['dr'].values
     data_y = df['v'].values
     data_yerr = df['dv'].values

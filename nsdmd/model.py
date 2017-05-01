@@ -2,16 +2,19 @@ import numpy as np
 import nestle
 import math
 
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
-
-import corner
-
 from scipy.integrate import quad
+from . import io
 
 
-# Define model
+#  NFW model  ---------------------------------------------------------------------------------------------------------------
 def model_NFW(theta, x):
+    
+    
+    
+    """
+    define the model 
+    
+    """
     
     # Calculate the mass between 0 and data_x by integrating the NFW distribution.
     #
@@ -38,13 +41,20 @@ def model_NFW(theta, x):
     vrot = theta[1]*np.sqrt(mass/x) 
     
     return vrot
+
+
+# Define a likelihood function
+def loglike_NFW(theta,data):
     
     
+    """
+    data: data_x,data_xerr,data_y,data_yerr
     
     
-    
-    # Define a likelihood function
-def loglike_NFW(theta):
+    """
+    data_x, data_xerr, data_y, data_yerr = data
+
+
     
     # Calculate the mass between 0 and data_x by integrating the NFW distribution.
     a = theta[0]
@@ -61,77 +71,23 @@ def loglike_NFW(theta):
     return -chisq / 2.
 
 
-
-# It is a transformation from a space where variables are independently and uniformly distributed between 0 and 1 to the parameter space of interest. 
-# 
-
-
-def prior_transform_NFW(theta):
-    
-    # theta[0] in the range of [0,10] and theta[1] in the range of [0,300]
-    # return  np.array([10, 300]) * theta
-    return  np.array([10*theta[0],500*theta[1]])
-
-def show_results(loglike_NFW, prior_transform_NFW, n): 
-    # n is the dim of theta; for NFW model, n =2 
-    result = nestle.sample(loglike_NFW, prior_transform_NFW, 2)
-
-    print ('log evidence')
-    print (result.logz)
-
-    print ('numerical (sampling) error on logz')
-    print (result.logzerr)   
-       
-    print ('array of sample parameters')
-    print (result.samples)  
-       
-    print ('array of weights associated with each sample')
-    print (result.weights)
+def prior_transform_NFW( theta,priorRange):
     
     
-    p, cov = nestle.mean_and_cov(result.samples, result.weights)
-
-    print("core radius a = {0:5.2f} +/- {1:5.2f} kpc".format(p[0], np.sqrt(cov[0, 0])))
-    print("normalization factor = {0:5.2f} +/- {1:5.2f}".format(p[1], np.sqrt(cov[1, 1])))
-    print("Halo density normalization constant = {0:5.2e} +/- {1:5.2e} Msun/kpc^3".format(2.312E5*p[1], 2.312E5*np.sqrt(cov[1,
-                                                                                                                            1])))
-
-    # Note: in order to convert the model to units of Msun/kpc^3 we multiply its value by 2.312E5.
-    # See comments in the model definition for details.
-    print("Halo density in our solor system = {0:5.2e} Msun/kpc^3.".format(2.312E5*model_NFW(p, 8)))
-
-    # Note: 1 Msun/kpc^3 = 3.817E-2 (GeV/c^2)/m^3 = 3.817E-5 (GeV/c^2)/(dm^3)
-    # 1 dm^3 = 1 liter.
-    # 3 WIMPS/liter would be 300 GeV/c^2/liter
-    print("Halo density in our solor system = {0:5.2e} GeV/c^2/liter.".format(3.817E-5*2.312E5*model_NFW(p, 8)))
-
-    plt.figure()
-    plt.errorbar(data_x,data_y,data_yerr,data_xerr,fmt='*')
-    plt.xlabel("r (kpc)")
-    plt.ylabel('V (km/s)')
-    plt.title("The measured rotational speed of the interstellar medium as a fucntion of the galactocentric radius")
-    plt.plot([5.,200.],model_NFW(p, np.array([5.,200.])))
-    plt.show()
-
-    fig = corner.corner(result.samples, weights=result.weights, labels=['a', 'rho0'],
-                        range=[0.99999, 0.99999], bins=30)
-    plt.show()
-
-    return 0 
-
-
-
-
-
-
-
-# It is a transformation from a space where variables are independently and uniformly distributed between 0 and 1 to the parameter space of interest. 
-# 
-
-def prior_transform_NFW(theta):
+    """
+    a:  theta[0] in the range of [0,a]  (10 the value used )     
+    b:  theta[1] in the range of [0,b]  (500 the value used )
+    theta: para 
     
-    # theta[0] in the range of [0,10] and theta[1] in the range of [0,300]
-    return  np.array([20, 500]) * theta
+    """
+    a,b = priorRange[0],priorRange[1]
+    
+    return  np.array([a*theta[0],b*theta[1]])
+
+
+# end of NFW model ----------------------------------------------------------------------------
+
+
 
 # Define the model we use to describe the data.
 
@@ -165,7 +121,11 @@ def model_ISO(theta, x):
 
 
 # Define a likelihood function
-def loglike_ISO_ref1(theta):
+def loglike_ISO_ref1(theta,data):
+    
+    data_x_ref1, data_xerr_ref1, data_y_ref1, data_yerr_ref1 = data
+
+
     
     # Calculate the mass between 0 and data_x by integrating the NFW distribution.
     a = theta[0]
@@ -181,30 +141,27 @@ def loglike_ISO_ref1(theta):
     chisq= np.sum(((data_y_ref1 - y) / data_yerr_ref1)**2)
     return -chisq / 2.
 
-def loglike_ISO_ref2(theta):
-    
-    # Calculate the mass between 0 and data_x by integrating the NFW distribution.
-    a = theta[0]
-    mass = 4.*np.pi*(a**3)*(data_x_ref2/a - np.arctan(data_x_ref2/a))
-        
-    # Calculate the rotation velocity.
-    vrot = theta[1]*np.sqrt(mass/data_x_ref2) 
-        
-    # The y variable is the rotational velocity.
-    y = vrot
-    
-    # Calculate chisq
-    chisq= np.sum(((data_y_ref2 - y) / data_yerr_ref2)**2)
-    return -chisq / 2.
-
 
 # It is a transformation from a space where variables are independently and uniformly distributed between 0 and 1 to the parameter space of interest. 
 # 
 
-def prior_transform_ISO(theta):
+def prior_transform_ISO(theta,priorRange):
+
+    """
+    a:  theta[0] in the range of [0,a]  (10 the value used )     
+    b:  theta[1] in the range of [0,b]  (500 the value used )
+    theta: para 
+    
+    """
+    
+    a,b = priorRange[0],priorRange[1]    
+    
     
     # theta[0] in the range of [0,10] and theta[1] in the range of [0,300]
-    return  np.array([5, 1000]) * theta
+    return  np.array([a, b]) * theta
+
+
+# end of ISO model ------------------------------------------------------------------------------
 
 
 
@@ -212,11 +169,7 @@ def prior_transform_ISO(theta):
 
 
 
-
-
-
-
-
+# Einasto model ------------------------------------------------------------------------------------
 
 # Define the model we use to describe the data.
 # The Einasto model.
@@ -302,11 +255,13 @@ def model_Einasto(theta, x):
 
 
 
-
-
-
 # Define a likelihood function
-def loglike_Einasto_ref1(theta):
+def loglike_Einasto_ref1(theta,data):
+    
+    
+    data_x_ref1, data_xerr_ref1, data_y_ref1, data_yerr_ref1 = data
+
+
     
     # Set chisq to zero.
     chisq = 0.
@@ -322,31 +277,118 @@ def loglike_Einasto_ref1(theta):
     return -chisq / 2.
 
 
-# Define a likelihood function
-def loglike_Einasto_ref2(theta):
-    
-    # Set chisq to zero.
-    chisq = 0.
-
-    # Note: we use this loop to determine chisq since mass_Einasto has a problem 
-    # when data_x_ref2 is used as an argument.
-    for index in range(len(data_x_ref2)):
-        mass = mass_Einasto(theta,data_x_ref2[index])
-        vrot = theta[2]*np.sqrt(mass/data_x_ref2[index]) 
-        y = vrot
-        chisq = chisq + ((data_y_ref2[index] - y) / data_yerr_ref2[index])**2
-        
-    return -chisq / 2.
-
-
-
 # It is a transformation from a space where variables are independently and uniformly distributed between 0 and 1 to the parameter space of interest. 
 # 
 
-def prior_transform_Einasto(theta):
+def prior_transform_Einasto(theta,priorRange):
+    
+    """
+    a:  theta[0] in the range of [0,a]  (10 the value used )     
+    b:  theta[1] in the range of [0,b]  (10 the value used )
+    c:  theta[2] in the range of [0,c]  (500 the value used )
+    theta: para 
+    
+    """
+    a,b,c = priorRange[0],priorRange[1],priorRange[2]       
+    
     
     # theta[0] and theta[1] in the range of [0,10] and theta[1] in the range of [0,500]
-    return  np.array([10, 10, 500]) * theta
+    return  np.array([a, b, c]) * theta
+
+
+
+
+
+
+
+# end of Einasto model ------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def sample (loglike_model, prior_transform_model, datafile,priorRange):
+    
+    """
+    this function calls the loglikihood calculation function and the prior calculation function AND calculates the nestle results 
+    
+    
+    loglike_model :function returns loglikelihood interms of parameters 
+    
+    prior_transform_model: function  returns prior interms of parameters 
+    
+    
+    prior range : an arrage which specifies the limits of prior for different parameters eg:  prior range = [rangeForTheta[0],rangeForTheta[1],...]
+    
+    """
+    
+    
+    data_x,data_xerr,data_y,data_yerr = io.load_data(datafile)
+    
+    #n: number of parameters, len(priorRange)
+    n=len(priorRange) 
+
+
+
+
+
+    def new_loglike_model(theta):
+        return loglike_model(theta, (data_x,data_xerr,data_y,data_yerr))
+        
+    def new_prior_transform_model(theta):
+        return prior_transform_model(theta,priorRange)
+    
+    result = nestle.sample(new_loglike_model, new_prior_transform_model, n)
+    
+    
+    print ('log evidence')
+    print (result.logz)
+
+    print ('numerical (sampling) error on logz')
+    print (result.logzerr)   
+       
+    print ('array of sample parameters')
+    print (result.samples)  
+       
+    print ('array of weights associated with each sample')
+    print (result.weights)
+    
+    
+    
+    
+    
+    
+    return result 
+
+
+
 
 
 
