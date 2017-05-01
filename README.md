@@ -43,3 +43,7 @@ polish up readme
 -6- others: 
 look at the pull request
 use it to upgrade the package 
+
+
+-7- UPGRADE THE CODE 
+
