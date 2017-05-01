@@ -34,3 +34,7 @@ add [new rotational curve] to function
 
 -4- date set: 
 organize the data set better 
+
+
+-5- readme: 
+polish up readme 
