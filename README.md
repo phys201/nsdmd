@@ -47,6 +47,9 @@ use it to upgrade the package
 
 -7- UPGRADE THE CODE 
 
+-8- figure out what need to be done for the comparision part 
+
 -------------------------do it now --------
+
 email vinny about the 2 column format thing 
 email Ron for blabla 
