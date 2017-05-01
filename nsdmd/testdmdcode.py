@@ -44,7 +44,31 @@ class TestFunctions(unittest.TestCase):
              
         
         
-   
+    def test_model_ISO(self):
+        
+        theta0_range = np.linspace(6,1,10)
+        vrot=np.ones(len(theta0_range))
+        
+        for i in range(len(theta0_range)):
+            
+            theta = theta0_range[i], 10
+            vrot[i]=model.model_ISO(theta,11)
+                    
+        self.assertTrue(np.argmax(vrot)>-1000)
+                     
+        
+    def test_model_Einasto(self):
+        
+        theta0_range = np.linspace(6,1,10)
+        vrot=np.ones(len(theta0_range))
+        
+        for i in range(len(theta0_range)):
+            
+            theta = theta0_range[i], 10, 50
+            vrot[i]=model.model_Einasto(theta,11)
+                    
+        self.assertTrue(np.argmax(vrot)>-1000)
+                
 if __name__ == '__main__':
     unittest.main()            
             
