@@ -434,10 +434,10 @@ priorRange: an array which specifies the limits of unifrom prior for different p
 ----------
 Here are some example commands for running the fuction for 4 different models.    
 
-    model.sample (model.loglike_NFW, model.prior_transform_NFW, 'dataref1.txt',[10,10E10])
-    model.sample (model.loglike_ISO, model.prior_transform_ISO, 'dataref1.txt',[10,10E10])
-    model.sample (model.loglike_Einasto, model.prior_transform_Einasto, 'dataref1.txt',[10,10,10E10])
-    model.sample (model.loglike_GeneralizedHalo, model.prior_transform_GeneralizedHalo, 'dataref1.txt',[5.,10.,4.,1.5,5E8])
+    model.sample (model.loglike_NFW, model.prior_transform_NFW, 'DMdataref1.txt',[10,10E10])
+    model.sample (model.loglike_ISO, model.prior_transform_ISO, 'DMdataref1.txt',[10,10E10])
+    model.sample (model.loglike_Einasto, model.prior_transform_Einasto, 'DMdataref1.txt',[10,10,10E10])
+    model.sample (model.loglike_GeneralizedHalo, model.prior_transform_GeneralizedHalo, 'DMdataref1.txt',[5.,10.,4.,1.5,5E8])
 -----------
 As shown above, different models take in different loglike_model, prior_transform_model and priorRange. 
 
