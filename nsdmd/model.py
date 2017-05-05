@@ -503,6 +503,10 @@ priorRange: an arrange of 5 elements. Recommand to use [5.,10.,4.,1.5,5e8]
 
     
     import matplotlib.pyplot as plt
+    import corner
+
+
+    p_fit, cov_fit = nestle.mean_and_cov(result.samples, result.weights)
 
 
     plt.figure()
