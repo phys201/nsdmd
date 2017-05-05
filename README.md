@@ -49,6 +49,10 @@ use it to upgrade the package
 
 -8- figure out what need to be done for the comparision part 
 
+
+
+-9- final check: nosetests & run set up 
+
 -------------------------do it now --------
 
 email vinny about the 2 column format thing 
