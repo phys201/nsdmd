@@ -485,7 +485,7 @@ priorRange: an arrange of 5 elements. Recommand to use [5.,10.,4.,1.5,5e8]
     def new_prior_transform_model(theta):
         return prior_transform_model(theta,priorRange)
     
-    result = nestle.sample(new_loglike_model, new_prior_transform_model, n)
+    result = nestle.sample(new_loglike_model, new_prior_transform_model, n,steps=40)
     
     
     print ('log evidence')
@@ -499,6 +499,29 @@ priorRange: an arrange of 5 elements. Recommand to use [5.,10.,4.,1.5,5e8]
        
     print ('array of weights associated with each sample')
     print (result.weights)
+    
+
+    
+    import matplotlib.pyplot as plt
+
+
+    plt.figure()
+    plt.errorbar(data_x,data_y,yerr=data_yerr,fmt='*')
+    plt.xlabel("r (kpc)")
+    plt.ylabel('V (km/s)')
+    plt.title("Results of using the NFW model to fit the DM rotational velocity distribution")
+    xplot = [5+5*i for i in range(40)]
+    yplot = [model_NFW(xplot[i], p_fit) for i in range(40)]
+    plt.plot(xplot,yplot)
+    plt.show()
+
+    fig = corner.corner(result.samples, weights=result.weights, labels=['a', 'rho0'],
+                            range=[0.99999, 0.99999], bins=30)
+    plt.show()
+
+
+
+    
     
     
    
