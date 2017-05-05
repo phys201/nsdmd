@@ -485,7 +485,7 @@ priorRange: an arrange of 5 elements. Recommand to use [5.,10.,4.,1.5,5e8]
     def new_prior_transform_model(theta):
         return prior_transform_model(theta,priorRange)
     
-    result = nestle.sample(new_loglike_model, new_prior_transform_model, n,steps=40)
+    result = nestle.sample(new_loglike_model, new_prior_transform_model, n)
     
     
     print ('log evidence')
@@ -555,7 +555,7 @@ def sample_3 (loglike_model, prior_transform_model, datafile,priorRange):
     def new_prior_transform_model(theta):
         return prior_transform_model(theta,priorRange)
     
-    result = nestle.sample(new_loglike_model, new_prior_transform_model, n,steps=40)
+    result = nestle.sample(new_loglike_model, new_prior_transform_model, n)
     
     
     print ('log evidence')
@@ -624,7 +624,7 @@ def sample_5 (loglike_model, prior_transform_model, datafile,priorRange):
     def new_prior_transform_model(theta):
         return prior_transform_model(theta,priorRange)
     
-    result = nestle.sample(new_loglike_model, new_prior_transform_model, n,steps=40)
+    result = nestle.sample(new_loglike_model, new_prior_transform_model, n)
     
     
     print ('log evidence')
