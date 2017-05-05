@@ -434,8 +434,8 @@ def sample (loglike_model, prior_transform_model, datafile,priorRange):
     
     """
     
-    
-    data_x,data_xerr,data_y,data_yerr = io.load_data(datafile)
+    data_file = io.get_data_file_path(datafile)
+    data_x,data_xerr,data_y,data_yerr = io.load_data(data_file)
     
     #n: number of parameters, len(priorRange)
     n=len(priorRange) 

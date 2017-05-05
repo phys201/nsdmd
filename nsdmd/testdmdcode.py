@@ -13,7 +13,8 @@ class TestFunctions(unittest.TestCase):
         
         # import data 
         filename = 'dataref1.txt'
-        testdata_x,testdata_xerr,testdata_y,testdata_yerr = io.load_data(filename)
+        data_file = io.get_data_file_path(filename )
+        testdata_x,testdata_xerr,testdata_y,testdata_yerr = io.load_data(data_file)
         
         
         self.assertTrue(issubclass(type(testdata_x), np.ndarray))
