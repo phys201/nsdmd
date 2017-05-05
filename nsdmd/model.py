@@ -418,20 +418,29 @@ def prior_transform_GeneralizedHalo(theta,priorRange):
 
 
 
-# old sampling fucntion 
 
 def sample (loglike_model, prior_transform_model, datafile,priorRange):
     
     """
-    this function calls the loglikihood calculation function and the prior calculation function 
-    this function calculates the nestle sampling results 
+The function runs nested sampling. The function can be run on 4 different models. The user just needs to specify the model's loglikelihood and prior. 
+----------    
+The following input parameters are required:
     
+loglike_model: function calculates likelihood. The name of the loglike_model needs to be specified. [The name options are discussed in below]  
+prior_transform_model: function calculates the prior. The name of the prior transformation function needs to be specified. [The name options are discussed in below]  
+datafile: datafile with format has been discussed in above. 
+priorRange: an array which specifies the limits of unifrom prior for different parameters eg: priorRange =[rangeForTheta[0],rangeForTheta[1],...] Different models take in different length of priorRange. [The priorRange options are discussed in below.]  
+  
+----------
+Here are some example commands for running the fuction for 4 different models.    
+
+    model.sample (model.loglike_NFW, model.prior_transform_NFW, 'dataref1.txt',[10,10E10])
+    model.sample (model.loglike_ISO, model.prior_transform_ISO, 'dataref1.txt',[10,10E10])
+    model.sample (model.loglike_Einasto, model.prior_transform_Einasto, 'dataref1.txt',[10,10,10E10])
+    model.sample (model.loglike_GeneralizedHalo, model.prior_transform_GeneralizedHalo, 'dataref1.txt',[5.,10.,4.,1.5,5E8])
+-----------
     
-    loglike_model : function calculates likelihood 
-    prior_transform_model: function  calculates priors   
-    datafile: data file which has four colums: r(the galactocentric radius[kpc] ),dr(the error of galactocentric radius[kpc])                 ,v(the rotational velocits [km/s]), dv(the error of the rotational velocits [km/s])
-    prior range : an arrage which specifies the limits of unifrom prior for different parameters eg:  prior range = [rangeForTheta[0],rangeForTheta[1],...]
-    
+ 
     """
     
     data_file = io.get_data_file_path(datafile)
