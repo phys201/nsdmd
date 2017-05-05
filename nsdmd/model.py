@@ -426,10 +426,10 @@ The function runs nested sampling. The function can be run on 4 different models
 ----------    
 The following input parameters are required:
     
-loglike_model: function calculates likelihood. The name of the loglike_model needs to be specified. [The name options are discussed in below]  
-prior_transform_model: function calculates the prior. The name of the prior transformation function needs to be specified. [The name options are discussed in below]  
+loglike_model: function calculates likelihood. The name of the loglike_model needs to be specified. 
+prior_transform_model: function calculates the prior. The name of the prior transformation function needs to be specified. 
 datafile: datafile with format has been discussed in above. 
-priorRange: an array which specifies the limits of unifrom prior for different parameters eg: priorRange =[rangeForTheta[0],rangeForTheta[1],...] Different models take in different length of priorRange. [The priorRange options are discussed in below.]  
+priorRange: an array which specifies the limits of unifrom prior for different parameters eg: priorRange =[rangeForTheta[0],rangeForTheta[1],...]
   
 ----------
 Here are some example commands for running the fuction for 4 different models.    
@@ -439,7 +439,33 @@ Here are some example commands for running the fuction for 4 different models.
     model.sample (model.loglike_Einasto, model.prior_transform_Einasto, 'dataref1.txt',[10,10,10E10])
     model.sample (model.loglike_GeneralizedHalo, model.prior_transform_GeneralizedHalo, 'dataref1.txt',[5.,10.,4.,1.5,5E8])
 -----------
-    
+As shown above, different models take in different loglike_model, prior_transform_model and priorRange. 
+
+For NFW model: 
+loglike_model: it's named as 'model.loglike_NFW'
+prior_transform_model: it's named as 'model.prior_transform_NFW'
+datafile: any datafile that has the correct 4 columns format. 
+priorRange: an arrange of 2 elements. Recommand to use [10,10e10]
+
+
+For ISO model: 
+loglike_model: it's named as 'model.loglike_ISO'
+prior_transform_model: it's named as 'model.prior_transform_ISO'
+datafile: any datafile that has the correct 4 columns format. 
+priorRange: an arrange of 2 elements. Recommand to use [10,10e10]
+
+For Einasto model: 
+loglike_model: it's named as 'model.loglike_Einasto'
+prior_transform_model: it's named as 'model.prior_transform_Einasto'
+datafile: any datafile that has the correct 4 columns format. 
+priorRange: an arrange of 3 elements. Recommand to use [10,10,10e10]
+
+For GeneralizedHalo model: 
+loglike_model: it's named as 'model.loglike_GeneralizedHalo'
+prior_transform_model: it's named as 'model.prior_transform_GeneralizedHalo'
+datafile: any datafile that has the correct 4 columns format. 
+priorRange: an arrange of 5 elements. Recommand to use [5.,10.,4.,1.5,5e8]
+
  
     """
     
